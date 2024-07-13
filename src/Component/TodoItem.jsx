@@ -1,6 +1,7 @@
 import React from 'react'
 
 const TodoItem = ({todo, onToggle, onDelete, onUpdate}) => {
+  
   // inpu + label 을 id={todo.no}와  htmlFor={todo.no}로 연결
   // 1. 실제 label (동그라미) 이 클릭됨 <-> 2. input 체크 박스 클릭
 
@@ -9,6 +10,7 @@ const TodoItem = ({todo, onToggle, onDelete, onUpdate}) => {
   
   // 서버에서 온 status -> 스타일 , 체크 박스 적용
   status = status == 1 ? true : false
+  // console.log("체크박스 체크??",status);
   const className = status ? 'todoItem active':'todoItem'
 
   return (
@@ -39,6 +41,7 @@ const TodoItem = ({todo, onToggle, onDelete, onUpdate}) => {
                                                 }}>수정</button>
         <button className='btn btn-sm' onClick={()=>onDelete(no)}>삭제</button>
       </div>
+      
     </li>
   )
 }

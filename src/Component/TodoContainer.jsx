@@ -27,7 +27,7 @@ const TodoContainer = () => {
 
   },[])
 
-  //할일 등록-----------------------------------------------------------------
+  //할일 작성-----------------------------------------------------------------
   const onSubmit=()=>{
     console.log('할일: ', input);
 
@@ -73,7 +73,7 @@ const TodoContainer = () => {
     const data = {
       no: todo.no,
       name: todo.name,
-      status: todo.status ? 0 : 1,
+      status: todo.status ? 0 : 1, // DB에서 불어온 값으로 todo.status 값 판단
       // status: todo.status == 0 ? 1 : 0,
     }
 
@@ -85,7 +85,7 @@ const TodoContainer = () => {
       body: JSON.stringify(data)
     }
 
-    fetch('http://127.0.0.1:8080/todos',init)
+    fetch('http://127.0.0.1:8080/toggle',init)
           .then((response)=> response.text())
           .then((data)=> console.log(data) )
           .catch((error)=> console.log(error))
@@ -145,7 +145,7 @@ const TodoContainer = () => {
       method : 'DELETE',
     }
 
-    fetch(`http://127.0.0.1:8080/todos/-1`,init)
+          fetch(`http://127.0.0.1:8080/delall`,init)
           .then((response)=> response.text())
           .then((data)=> console.log(data) )
           .catch((error)=> console.log(error))
@@ -158,19 +158,19 @@ const TodoContainer = () => {
   //전체 완료----------------------------------------------------
   const onCompleteAll=()=>{
 
-    const data = {
-      no: -1,
-    }
+    // const data = {
+    //   no: -1,
+    // }
 
     const init ={
       method : 'PUT',
-      headers :{
-        'Content-type' : 'application/json'
-      },
-      body: JSON.stringify(data)
+      // headers :{
+      //   'Content-type' : 'application/json'
+      // },
+      // body: JSON.stringify(data)
     }
 
-    fetch('http://127.0.0.1:8080/todos',init)
+    fetch('http://127.0.0.1:8080/complete-all',init)
           .then((response)=> response.text())
           .then((data)=> console.log(data) )
           // .then((data)=> setTodoList(data) )
@@ -184,7 +184,7 @@ const TodoContainer = () => {
      *                                   return 키워드를 사용하여 명시적으로 객체를 반환  
      */                                                                           
     const sortedTodoList 
-            = todoList.map((item)=>  ({ ...item, status: 1}) ) //명시적으로 객체를 반환
+            = todoList.map((item)=>  ({ ...item, status: 1}) ) // 명시적으로 객체를 반환
                       // .sort((a,b) => a.status - b.status == 0 ? b.no-a.no : a.status-b.status )
 
     
@@ -214,7 +214,7 @@ const TodoContainer = () => {
       body: JSON.stringify(data)
     }
 
-    fetch('http://127.0.0.1:8080/todos',init)
+    fetch(`http://127.0.0.1:8080/todos/${todo.no}`,init)
           .then((response)=> response.text())
           .then((data)=> console.log(data) )
           .catch((error)=> console.log(error))
